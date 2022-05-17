@@ -69,10 +69,53 @@ stats Shaker(std::vector<int>& data) //n^2
     return shaker;
 }
 
+void Heap_Sort(std::vector<int>& data, size_t root, size_t size, stats& heap)
+{
+    size_t largest = root;
+    size_t l = 2 * root + 1;
+    size_t r = 2 * root + 2;
+    heap.comparison_count++;
+    if ((l < size) && (data[l] > data[largest]))
+    {
+        largest = l;
+        heap.copy_count++;
+    }
+    heap.comparison_count++;
+    if ((r < size) && (data[r] > data[largest]))
+    {
+        largest = r;
+        heap.copy_count++;
+    }
+    heap.comparison_count++;
+    if (largest != root)
+    {
+        swap(data[root], data[largest]);
+        heap.copy_count++;
+        Heap_Sort(data, largest, size, heap);
+    }
+}
+
+stats Heap(std::vector<int>& data) //n*log(n)
+{
+    stats heap;
+    int size = int(data.size());
+    for (int i = size / 2 - 1; i >= 0; --i)
+        Heap_Sort(data, i, size, heap);
+    for (int i = size - 1; i > 0; i--)
+    {
+        swap(data[i], data[0]);
+        heap.copy_count++;
+        Heap_Sort(data, 0, i, heap);
+    }
+    Print(data);
+    return heap;
+}
+
 
 int main() {
     std::vector<int> test = { 5, 4, 12, 6, 2, 7, 18 };
     std::vector<int> test2 = { 5, 4, 12, 6, 2, 7, 18 };
+    std::vector<int> test3 = { 5, 4, 12, 6, 2, 7, 18 };
     stats result1 = inserts_sort(test);
     std::cout << result1.comparison_count << std::endl;
     std::cout << result1.copy_count << std::endl;
@@ -81,6 +124,13 @@ int main() {
     }
     std::cout << std::endl;
     stats result2 = Shaker(test2);
+    std::cout << result2.comparison_count << std::endl;
+    std::cout << result2.copy_count << std::endl;
+    for (auto i = test.begin(); i != test.end(); ++i) {
+        std::cout << *i << " ";
+    }
+    std::cout << std::endl;
+    stats result3 = Heap(test2);
     std::cout << result2.comparison_count << std::endl;
     std::cout << result2.copy_count << std::endl;
     for (auto i = test.begin(); i != test.end(); ++i) {
