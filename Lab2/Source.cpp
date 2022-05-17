@@ -18,15 +18,13 @@ void Print(vector<int> v)
     std::cout << std::endl;
 }
 
-stats inserts_sort(std::vector<int>& data) {
+stats inserts_sort(std::vector<int>& data) { //n^2
 	stats tmp;
 	for (size_t i = 1; i < data.size(); i++) {
 		for (size_t j = i; j > 0; j--) {
 			tmp.comparison_count++;
 			if (data[j - 1] > data[j]) {
-				int temp = data[j - 1];
-				data[j - 1] = data[j];
-				data[j] = temp;
+                swap(data[j - 1], data[j]);
 				tmp.copy_count++;
 			}
 		}
@@ -34,8 +32,7 @@ stats inserts_sort(std::vector<int>& data) {
 	return tmp;
 }
 
-stats Shaker(std::vector<int>& data) //n^2
-{
+stats Shaker(std::vector<int>& data) { //n^2
     stats shaker;
     int beyond = data.size() - 1;
     int left = 0;
