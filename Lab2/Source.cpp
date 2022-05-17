@@ -121,14 +121,14 @@ int main() {
     stats result2 = Shaker(test2);
     std::cout << result2.comparison_count << std::endl;
     std::cout << result2.copy_count << std::endl;
-    for (auto i = test.begin(); i != test.end(); ++i) {
+    for (auto i = test2.begin(); i != test2.end(); ++i) {
         std::cout << *i << " ";
     }
     std::cout << std::endl;
-    stats result3 = Heap(test2);
-    std::cout << result2.comparison_count << std::endl;
-    std::cout << result2.copy_count << std::endl;
-    for (auto i = test.begin(); i != test.end(); ++i) {
+    stats result3 = Heap(test3);
+    std::cout << result3.comparison_count << std::endl;
+    std::cout << result3.copy_count << std::endl;
+    for (auto i = test3.begin(); i != test3.end(); ++i) {
         std::cout << *i << " ";
     }
     /*srand(time(NULL));
