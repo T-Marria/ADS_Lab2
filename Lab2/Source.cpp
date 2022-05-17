@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <time.h>
-#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -62,7 +62,6 @@ stats Shaker(std::vector<int>& data) { //n^2
         left = beyond;
         shaker.comparison_count++;
     } while (left < right);
-    Print(data);
     return shaker;
 }
 
@@ -95,7 +94,7 @@ void Heap_Sort(std::vector<int>& data, size_t root, size_t size, stats& heap)
 stats Heap(std::vector<int>& data) //n*log(n)
 {
     stats heap;
-    int size = int(data.size());
+    int size = data.size();
     for (int i = size / 2 - 1; i >= 0; --i)
         Heap_Sort(data, i, size, heap);
     for (int i = size - 1; i > 0; i--)
@@ -104,15 +103,14 @@ stats Heap(std::vector<int>& data) //n*log(n)
         heap.copy_count++;
         Heap_Sort(data, 0, i, heap);
     }
-    Print(data);
     return heap;
-}
+} 
 
 
 int main() {
-    std::vector<int> test = { 5, 4, 12, 6, 2, 7, 18 };
-    std::vector<int> test2 = { 5, 4, 12, 6, 2, 7, 18 };
-    std::vector<int> test3 = { 5, 4, 12, 6, 2, 7, 18 };
+    std::vector<int> test = { 5, 4, 12, 6, 2, 7, 18, 0 };
+    std::vector<int> test2 = { 3, 9, 21, 0, 22, 12, 133, 12 };
+    std::vector<int> test3 = { 9, 22, 23, 11, 211, 2, 8, 2 };
     stats result1 = inserts_sort(test);
     std::cout << result1.comparison_count << std::endl;
     std::cout << result1.copy_count << std::endl;
@@ -133,5 +131,21 @@ int main() {
     for (auto i = test.begin(); i != test.end(); ++i) {
         std::cout << *i << " ";
     }
+    /*srand(time(NULL));
+    std::vector<int> test;
+    for (int i = 0; i < 1000; i++)
+    {
+        test.push_back(rand() % 100);
+        //std::cout << test[i] << ' ';
+    }
+    std::vector<int> test1 = test;
+    stats result = inserts_sort(test);
+    for (int i = 0; i < 1000; i++)
+    {
+        //test.push_back(rand() % 100);
+        std::cout << test[i] << ' ';
+    }
+    std::cout << result.comparison_count << std::endl;
+    std::cout << result.copy_count << std::endl; */
     return 0;
 }
